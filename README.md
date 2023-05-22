@@ -14,7 +14,7 @@ Checks for usage of the Mock library and suggests using Hammox instead:
 ```elixir
 def deps do
   [
-    {:slerp_checks, git: "slerpteam/slerp-checks", branch: "main", only: [:dev, :test]}
+    {:slerp_checks, github: "slerpteam/slerp-checks", branch: "main", only: [:dev, :test]}
   ]
 end
 ```

@@ -22,10 +22,6 @@ defmodule SlerpChecks.Warning.MockCheck do
     end
   end
 
-  defp traverse({:import, _, [{:__aliases__, meta, [:Mock]} | _]} = ast, issues, issue_meta) do
-    {ast, [issue_for(meta, issue_meta) | issues]}
-  end
-
   defp traverse({:__aliases__, meta, [:Mock]} = ast, issues, issue_meta) do
     {ast, [issue_for(meta, issue_meta) | issues]}
   end
@@ -38,7 +34,7 @@ defmodule SlerpChecks.Warning.MockCheck do
     format_issue(
       issue_meta,
       message: "Please use Hammox instead of Mock",
-      trigger: "import Mock",
+      trigger: "Mock",
       line_no: meta[:line]
     )
   end

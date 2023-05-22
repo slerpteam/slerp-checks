@@ -15,7 +15,7 @@ defmodule SlerpChecks.Warning.MockCheckTest do
       end
     end
     """
-    |> to_source_file("test.exs")
+    |> to_source_file("test_pass.exs")
     |> run_check(MockCheck)
     |> refute_issues()
   end
@@ -27,20 +27,21 @@ defmodule SlerpChecks.Warning.MockCheckTest do
       import Mock
 
       test "test" do
-        assert true
+        with_mock(App, [hello: fn -> :world end], fn ->
+          assert App.hello() == :world
+        end)
       end
     end
     """
-    |> to_source_file("test.exs")
+    |> to_source_file("test_import.exs")
     |> run_check(MockCheck)
-    |> assert_issues()
+    |> assert_issue(fn issue -> issue.trigger == "Mock" end)
   end
 
   test "it fails modules using mock without importing" do
     """
     defmodule App do
       use ExUnit.Case
-      import Mock
 
       test "test" do
         Mock.with_mock(App, [hello: fn -> :world end], fn ->
@@ -49,8 +50,8 @@ defmodule SlerpChecks.Warning.MockCheckTest do
       end
     end
     """
-    |> to_source_file("test.exs")
+    |> to_source_file("test_no_import.exs")
     |> run_check(MockCheck)
-    |> assert_issues()
+    |> assert_issue(fn issue -> issue.trigger == "Mock" end)
   end
 end
