@@ -1,4 +1,4 @@
-defmodule SlerpChecks.Warning.StrictApplicationCallcsTest do
+defmodule SlerpChecks.Warning.StrictApplicationCallsTest do
   @moduledoc false
   use Credo.Test.Case
   alias SlerpChecks.Warning.StrictApplicationCalls
